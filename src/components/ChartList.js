@@ -1,42 +1,20 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import {useNavigate} from "react-router-dom"
+import PortfolioContext from '../PortfolioContext'
 import "./ChartList.css"
 
 function ChartList(){
 
     const navigate = useNavigate(); 
+    const context_stock_info = React.useContext(PortfolioContext)
 
-    const stockEntries = [
-        {symbol : "NFLX",
-         description: "It is Netflix",
-         image: "./SampleChart.jpg"},
-         {symbol : "CSCO",
-         description: "It is Cisco",
-         image: "./SampleChart.jpg"},
-         {symbol : "GILD",
-         description: "It is Gilead",
-         image: "./SampleChart.jpg"},
-         {symbol : "AMZN",
-         description: "It is Amazon",
-         image: "./SampleChart.jpg"},
-         {symbol : "NVDA",
-         description: "It is Nvidia",
-         image: "./SampleChart.jpg"},
-         {symbol : "MSFT",
-         description: "It is Microsoft",
-         image: "./SampleChart.jpg"},
-         {symbol : "GOOG",
-         description: "It is Google",
-         image: "./SampleChart.jpg"},
-    ]
-
-    const mappedChartList = stockEntries.map((stock,i) => {
+    const mappedChartList = context_stock_info.map((stock,i) => {
 
         return (
             <Card key={i} className="card-style border border-primary">
+                {console.log("I = " + i + "STOCK = " + stock.symbol)}
                 <Card.Img variant="top" src={stock.image}/>
                 <Card.Body>
                     <Card.Title>{stock.symbol}</Card.Title>
@@ -44,7 +22,7 @@ function ChartList(){
                     {stock.description}
                     </Card.Text>
                     <Button variant="primary" 
-                        onClick={()=>{navigate("/details"); console.log("I=" + (i+1))}}>Details {i+1}</Button>
+                        onClick={()=>{navigate(`/details/${i}`);}}>Details {i}</Button>
                 </Card.Body>
             </Card>
         )
@@ -61,4 +39,5 @@ function ChartList(){
 
   export default ChartList
 
-  //                    <Button variant="primary" onClick={console.log("HI")}>Details {i}</Button>
+  //                        onClick={()=>{navigate("/details"); console.log("I=" + (i+1))}}>Details {i+1}</Button>
+
